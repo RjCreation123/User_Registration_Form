@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const connect = mongoose.connect(
-  "mongodb+srv://rj8121774:5DEfUAX8syGZSETs@cluster0.36cldwf.mongodb.net/rahul",
+  "mongodb+srv://rj8121774:5DEfUAX8syGZSETs@cluster0.36cldwf.mongodb.net/rahul"
 );
 
 connect
@@ -13,18 +13,21 @@ connect
   });
 
 const userSchema = new mongoose.Schema({
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    trim: true,
+  },
   firstname: {
     type: String,
     required: true,
+    trim: true,
   },
   lastname: {
     type: String,
     required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true, // Ensure unique email addresses
+    trim: true,
   },
   password: {
     type: String,
@@ -37,7 +40,5 @@ const userSchema = new mongoose.Schema({
 });
 
 const User = mongoose.model("User", userSchema);
-
-
 
 export default User;

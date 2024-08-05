@@ -3,6 +3,7 @@
 import { useState } from "react";
 import axios from "axios";
 
+
 export default function Signup() {
   const [firstname, setFirstName] = useState("");
   const [lastname, setLastName] = useState("");
@@ -15,6 +16,15 @@ export default function Signup() {
     e.preventDefault();
 
     try {
+
+      console.log("Sending signup request with data:", {
+        email,
+        firstname,
+        lastname,
+        password,
+        confirmpassword
+      });
+
       const response = await axios.post("http://localhost:8000/signup", {
         email,
         firstname,
@@ -23,7 +33,8 @@ export default function Signup() {
         confirmpassword
       });
 
-      console.log(response);
+      console.log("Response from server:", response);
+      
     if (response.status === 200) {
         window.alert("Registration successful!"); 
         setFirstName("");
@@ -34,7 +45,13 @@ export default function Signup() {
       }
     } catch (error) {
       console.log(error);
-      setMessage("Registration failed. Please try again.");
+      if (error.response && error.response.status === 400) {
+        setMessage(error.response.data);
+      } else if (error.response && error.response.status === 500) {
+        setMessage("Internal server error: " + error.response.data);
+      } else {
+        setMessage("Registration failed. Please try again.");
+      }
     }
   };
 
