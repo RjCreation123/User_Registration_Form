@@ -1,0 +1,24 @@
+/*!**********************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[3]!./src/styles/Home.module.css ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************/
+.Home_buttonContainer__T_c1v {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.Home_button__Mzpzz {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: #0070f3;
+  color: white;
+  transition: background-color 0.3s;
+}
+
+.Home_button__Mzpzz:hover {
+  background-color: #005bb5;
+}
+

@@ -2,6 +2,7 @@
 
 import axios from "axios";
 import { useState } from "react";
+import styles from '../../styles/Signin.module.css';
 
 export default function Signin() {
   const [email, setEmail] = useState("");
@@ -40,30 +41,32 @@ export default function Signin() {
   };
 
   return (
-    <div>
-      <h1>Sign In</h1>
+    <div className={styles.container}>
+      <h1 className={styles.title}>Signin</h1>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">Email:</label>
+        <div className={styles.formGroup}>
+          <label htmlFor="email" className={styles.label}>Email:</label>
           <input
             type="email"
             id="email"
+            className={styles.input}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
         </div>
-        <div>
-          <label htmlFor="password">Password:</label>
+        <div className={styles.formGroup}>
+          <label htmlFor="password" className={styles.label}>Password:</label>
           <input
             type="password"
             id="password"
+            className={styles.input}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
         </div>
-        <div>
+        <div className={styles.formGroup}>
           <label>
             <input
               type="checkbox"
@@ -73,9 +76,9 @@ export default function Signin() {
             Stay logged in
           </label>
         </div>
-        <button type="submit">Sign In</button>
+        <button type="submit" className={styles.button}>Sign In</button>
       </form>
-      {message && <p>{message}</p>}
+      {message && <p className={styles.message}>{message}</p>}
     </div>
   );
 }

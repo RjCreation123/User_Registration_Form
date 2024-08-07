@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import axios from "axios";
-
+import styles from '../../styles/Signup.module.css';
 
 export default function Signup() {
   const [firstname, setFirstName] = useState("");
@@ -56,62 +56,67 @@ export default function Signup() {
   };
 
   return (
-    <div>
-      <h1>Signup</h1>
+    <div className={styles.container}>
+      <h1 className={styles.title}>Signup</h1>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="firstname">First Name:</label>
+        <div className={styles.formGroup}>
+          <label htmlFor="firstname" className={styles.label}>First Name:</label>
           <input
             type="text"
             id="firstname"
+            className={styles.input}
             value={firstname}
             onChange={(e) => setFirstName(e.target.value)}
             required
           />
         </div>
-        <div>
-          <label htmlFor="lastname">Last Name:</label>
+        <div className={styles.formGroup}>
+          <label htmlFor="lastname" className={styles.label}>Last Name:</label>
           <input
             type="text"
             id="lastname"
+            className={styles.input}
             value={lastname}
             onChange={(e) => setLastName(e.target.value)}
             required
           />
         </div>
-        <div>
-          <label htmlFor="email">Email:</label>
+        <div className={styles.formGroup}>
+          <label htmlFor="email" className={styles.label}>Email:</label>
           <input
             type="email"
             id="email"
+            className={styles.input}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
         </div>
-        <div>
-          <label htmlFor="password">Password:</label>
+        <div className={styles.formGroup}>
+          <label htmlFor="password" className={styles.label}>Password:</label>
           <input
             type="password"
             id="password"
+            className={styles.input}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
         </div>
-        <div>
-          <label htmlFor="confirmpassword">Confirm Password:</label>
+        <div className={styles.formGroup}>
+          <label htmlFor="confirmpassword" className={styles.label}>Confirm Password:</label>
           <input
             type="password"
             id="confirmpassword"
+            className={styles.input}
             value={confirmpassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
           />
         </div>
-        <button type="submit">Sign Up</button>
+        <button type="submit" className={styles.button}>Sign Up</button>
       </form>
-      {message && <p>{message}</p>}
+      {message && <p className={styles.message}>{message}</p>}
     </div>
   );
 }
