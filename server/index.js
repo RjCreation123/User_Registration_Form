@@ -63,6 +63,7 @@ app.post('/signin', async (req, res) => {
     if (!user) {
       return res.status(401).send('Invalid email or password');
     }
+    const name = user.firstname;
 
     // Compare the hashed password
     const validPassword = await bcrypt.compare(password, user.password);
@@ -72,7 +73,7 @@ app.post('/signin', async (req, res) => {
       const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: '1h' });
 
       // Respond with the token
-      res.json({ token });
+      res.json({ token, name });
     } else {
       res.status(401).send('Invalid email or password');
     }

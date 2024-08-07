@@ -4,6 +4,7 @@ import axios from "axios";
 import { useState } from "react";
 import styles from '../../styles/Signin.module.css';
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function Signin() {
   const [email, setEmail] = useState("");
@@ -12,28 +13,29 @@ export default function Signin() {
   const [stayLoggedIn, setStayLoggedIn] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const router = useRouter();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
       const response = await axios.post("http://localhost:8000/signin", {
-        firstname,
         email,
         password,
       });
 
-      const { token, firstname } = response.data;
+      const { token, name } = response.data;
 
       if (response.status === 200) {
         if (stayLoggedIn) {
           localStorage.setItem("auth", token);
-          localStorage.setItem("userName", firstname);
+          localStorage.setItem("name", name);
         } else {
           sessionStorage.setItem("auth", token);
-          sessionStorage.setItem("userName", firstname);
+          sessionStorage.setItem("name", name);
         }
-        window.alert(`Sign-in successful! Welcome, ${firstname}`);
+        router.push("/");
         setEmail("");
         setPassword("");
       }

@@ -3,26 +3,30 @@
 import Image from "next/image";
 import styles from '../styles/Home.module.css';
 import { useRouter } from "next/navigation";
+import Unauthenticated from "@/components/unauthenticated";
+import { useEffect, useState } from "react";
 
 export default function Home() {
 
   const router = useRouter();
 
-  const handleSignIn = () => {
-    router.push('/signin');
-  };
+  const [token, setToken] = useState(false);
+  const [name, setName] = useState(null);
 
-  const handleSignUp =() => {
-    router.push('/signup');
-  };
+  useEffect( ()=> {
+    const getToken = sessionStorage.getItem("auth") || localStorage.getItem("auth")
+    if(getToken){
+      setToken(true)
+      const getName = sessionStorage.getItem("name") || localStorage.getItem("name")
+      setName(getName)
+    }
+  },[]);
 
   return (
    <>
-     <h1>Welcome to the User Registration Page!</h1>
-     <div className={styles.buttonContainer}>
-       <button type="submit" className={styles.button} onClick={handleSignIn}>Sign in</button>
-       <button type="submit" className={styles.button} onClick={handleSignUp}>Sign up</button>
-     </div>
+     {
+      token ?<h1>Welcome {name}!</h1>: <Unauthenticated></Unauthenticated>
+     }     
    </>
   );
 }
