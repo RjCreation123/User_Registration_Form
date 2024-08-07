@@ -1,4 +1,4 @@
-// File: C:\Users\RAHUL\Desktop\User_Registration_form\client\src\app\layout.js
+// File: C:\Users\RAHUL\Desktop\User_Registration_form_client\client\src\app\layout.js
 import * as entry from '../../../src/app/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
