@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import axios from "axios";
-import styles from '../../styles/Signup.module.css';
+import styles from "../../styles/Signup.module.css";
+import Link from "next/link";
 
 export default function Signup() {
   const [firstname, setFirstName] = useState("");
@@ -11,18 +12,18 @@ export default function Signup() {
   const [password, setPassword] = useState("");
   const [confirmpassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-
       console.log("Sending signup request with data:", {
         email,
         firstname,
         lastname,
         password,
-        confirmpassword
+        confirmpassword,
       });
 
       const response = await axios.post("http://localhost:8000/signup", {
@@ -30,13 +31,13 @@ export default function Signup() {
         firstname,
         lastname,
         password,
-        confirmpassword
+        confirmpassword,
       });
 
       console.log("Response from server:", response);
-      
-    if (response.status === 200) {
-        window.alert("Registration successful!"); 
+
+      if (response.status === 200) {
+        window.alert("Registration successful!");
         setFirstName("");
         setLastName("");
         setEmail("");
@@ -60,7 +61,9 @@ export default function Signup() {
       <h1 className={styles.title}>Signup</h1>
       <form onSubmit={handleSubmit}>
         <div className={styles.formGroup}>
-          <label htmlFor="firstname" className={styles.label}>First Name:</label>
+          <label htmlFor="firstname" className={styles.label}>
+            First Name:
+          </label>
           <input
             type="text"
             id="firstname"
@@ -71,7 +74,9 @@ export default function Signup() {
           />
         </div>
         <div className={styles.formGroup}>
-          <label htmlFor="lastname" className={styles.label}>Last Name:</label>
+          <label htmlFor="lastname" className={styles.label}>
+            Last Name:
+          </label>
           <input
             type="text"
             id="lastname"
@@ -82,7 +87,9 @@ export default function Signup() {
           />
         </div>
         <div className={styles.formGroup}>
-          <label htmlFor="email" className={styles.label}>Email:</label>
+          <label htmlFor="email" className={styles.label}>
+            Email:
+          </label>
           <input
             type="email"
             id="email"
@@ -93,7 +100,9 @@ export default function Signup() {
           />
         </div>
         <div className={styles.formGroup}>
-          <label htmlFor="password" className={styles.label}>Password:</label>
+          <label htmlFor="password" className={styles.label}>
+            Password:
+          </label>
           <input
             type="password"
             id="password"
@@ -104,7 +113,9 @@ export default function Signup() {
           />
         </div>
         <div className={styles.formGroup}>
-          <label htmlFor="confirmpassword" className={styles.label}>Confirm Password:</label>
+          <label htmlFor="confirmpassword" className={styles.label}>
+            Confirm Password:
+          </label>
           <input
             type="password"
             id="confirmpassword"
@@ -114,9 +125,19 @@ export default function Signup() {
             required
           />
         </div>
-        <button type="submit" className={styles.button}>Sign Up</button>
+        <button type="submit" className={styles.button} disabled={loading}>
+          {loading ? "Signing Up..." : "Sign Up"}
+        </button>
       </form>
       {message && <p className={styles.message}>{message}</p>}
+      <div className="main-signup-footer mt-3 text-center">
+        <p>
+          Already have an account?{" "}
+          <Link href={`/signin`}>
+            Sign In
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }

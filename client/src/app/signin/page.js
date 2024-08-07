@@ -3,32 +3,39 @@
 import axios from "axios";
 import { useState } from "react";
 import styles from '../../styles/Signin.module.css';
+import Link from "next/link";
 
 export default function Signin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [stayLoggedIn, setStayLoggedIn] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+    setLoading(true);
+
     try {
       const response = await axios.post("http://localhost:8000/signin", {
+        firstname,
         email,
         password,
       });
 
-      // Assuming the response contains a token
-      const token = response.data.token;
+      const { token, firstname } = response.data;
 
       if (response.status === 200) {
         if (stayLoggedIn) {
           localStorage.setItem("auth", token);
+          localStorage.setItem("userName", firstname);
         } else {
           sessionStorage.setItem("auth", token);
+          sessionStorage.setItem("userName", firstname);
         }
-        setMessage("Sign-in successful!");
+        window.alert(`Sign-in successful! Welcome, ${firstname}`);
+        setEmail("");
+        setPassword("");
       }
     } catch (error) {
       console.error("Sign-in error:", error);
@@ -37,6 +44,8 @@ export default function Signin() {
       } else {
         setMessage("Sign-in failed. Please try again.");
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -72,13 +81,24 @@ export default function Signin() {
               type="checkbox"
               checked={stayLoggedIn}
               onChange={() => setStayLoggedIn(!stayLoggedIn)}
+              aria-label="Stay logged in"
             />
             Stay logged in
           </label>
         </div>
-        <button type="submit" className={styles.button}>Sign In</button>
+        <button type="submit" className={styles.button} disabled={loading}>
+          {loading ? "Signing In..." : "Sign In"}
+        </button>
       </form>
       {message && <p className={styles.message}>{message}</p>}
+      <div className="main-signup-footer mt-3 text-center">
+        <p>
+          Don't have an account?{" "}
+          <Link href={`/signup`}>
+            Sign Up
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }
