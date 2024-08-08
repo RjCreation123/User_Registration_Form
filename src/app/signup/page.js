@@ -26,7 +26,7 @@ export default function Signup() {
         confirmpassword,
       });
 
-      const response = await axios.post("http://localhost:8000/signup", {
+      const response = await axios.post("https://user-registration-form-server.onrender.com/signup", {
         email,
         firstname,
         lastname,
